@@ -41,25 +41,9 @@ public class RouteCreator
             queuedRoutes.Enqueue(newRoute, newRoute.GetScore());
         }
 
-        int v = 0;
-        double prev = 0;
         // While the queuedRoutes queue contains any value
         while (!queuedRoutes.IsEmpty())
         {
-            /*v++;
-            if (v % 10000 == 0)
-            {
-                Mat m = new Mat(100, 100, CvType.CV_8UC3, new Scalar(0));
-                Imgproc.putText(m, "C: " + queuedRoutes.Count(), new Point(1, 20), Imgproc.FONT_HERSHEY_COMPLEX_SMALL, 0.8, new Scalar(255), 1, 4, true);
-                Imgproc.putText(m, "B: " + bestRoute.score, new Point(1, 40), Imgproc.FONT_HERSHEY_COMPLEX_SMALL, 0.8, new Scalar(255), 1, 4, true);
-                ProcessSprites.instance.AddProcessImage(m, "t");
-                if (bestRoute.score < 100 && bestRoute.score != prev)
-                {
-                    prev = bestRoute.score;
-                    bestRoute.DrawRoute();
-                }
-            }*/
-
             // Get the current route
             Route currentRoute = queuedRoutes.Dequeue();
 
