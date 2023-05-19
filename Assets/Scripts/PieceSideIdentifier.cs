@@ -393,6 +393,9 @@ public class PieceSideIdentifier
         // Create a list to store the sides of the piece
         List<Side> sides = new List<Side>();
 
+        // Side ID
+        int id = 0;
+
         // Loop over all polar coordinates
         foreach (PointData pt in polarCoordinates)
         {
@@ -408,7 +411,7 @@ public class PieceSideIdentifier
                     // Add it to the buffer, then isolate the side into a Side object
                     buffer.Add(point);
                     sideInfo = DetermineSideNature(buffer, center);
-                    sides.Add(new Side(piece, sideInfo.Item1, sideInfo.Item2, new List<Point>(buffer)));
+                    sides.Add(new Side(id++, piece, sideInfo.Item1, sideInfo.Item2, new List<Point>(buffer)));
                     // Clear the buffer, ready for the next corner, and add the current corner to the buffer
                     buffer.Clear();
                     buffer.Add(point);
@@ -437,7 +440,7 @@ public class PieceSideIdentifier
         // Add the missed points to the buffer and isolate the side into a Side object
         buffer.AddRange(missed);
         sideInfo = DetermineSideNature(buffer, center);
-        sides.Add(new Side(piece, sideInfo.Item1, sideInfo.Item2, new List<Point>(buffer)));
+        sides.Add(new Side(id++, piece, sideInfo.Item1, sideInfo.Item2, new List<Point>(buffer)));
 
         // Set the pieces sides and draw them
         piece.sides = sides;

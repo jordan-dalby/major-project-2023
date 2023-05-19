@@ -7,6 +7,8 @@ using UnityEngine;
 public class Side
 {
 
+    public int id;
+
     public Piece piece;
 
     public SideType type;
@@ -21,8 +23,9 @@ public class Side
 
     public Dictionary<Side, double> matches = new Dictionary<Side, double>();
 
-    public Side(Piece _piece, SideType _type, CardinalDirection _dir, List<Point> _points)
+    public Side(int _id, Piece _piece, SideType _type, CardinalDirection _dir, List<Point> _points)
     {
+        id = _id;
         piece = _piece;
         type = _type;
         direction = _dir;
@@ -39,7 +42,7 @@ public class Side
         foreach (Point pt in points)
             newPoints.Add(new Point(pt.x, pt.y));
 
-        Side newSide = new Side(piece, type, direction, newPoints);
+        Side newSide = new Side(id, piece, type, direction, newPoints);
         newSide.samplePoints = samplePoints;
         newSide.matches = matches;
         return newSide;
@@ -47,7 +50,7 @@ public class Side
 
     public Side CloneMinimum()
     {
-        Side newSide = new Side(piece, type, direction, null);
+        Side newSide = new Side(id, piece, type, direction, null);
         newSide.matches = matches;
         return newSide;
     }
