@@ -90,12 +90,15 @@ public class RouteCreator
             // If a corner, rotate all of the pieces 90 degrees counter-clockwise
             if (rotatedPiece.GetNumberOfEdges() == 2)
             {
+                // Rotate the entire route 90 degrees counter-clockwise
                 currentRoute.RotateRouteToWest();
                 // Reassign the rotatedPiece since we will have cloned it during the rotation process
                 rotatedPiece = currentRoute.GetCurrentPiece();
 
+                // If the first dimension is not yet found
                 if (currentRoute.dimensions[0] == 0)
                 {
+                    // Set the first dimension, we have found another corner so we know how wide the jigsaw is
                     currentRoute.dimensions[0] = currentRoute.pieces.Count;
                     // If the first dimension of this branch is longer than the number of remaining pieces, it's definitely not a solution
                     if (currentRoute.dimensions[0] > currentRoute.remainingPieceIds.Count)
@@ -104,12 +107,15 @@ public class RouteCreator
                         continue;
                     }
                 }
+                // If the first dimension is assigned and the second dimension isn't
                 else if (currentRoute.dimensions[0] != 0 && currentRoute.dimensions[1] == 0)
                 {
+                    // Assign the second dimension and run a calculation to find the height of the jigsaw based on the first dimension
                     currentRoute.dimensions[1] = currentRoute.pieces.Count + 1 - currentRoute.dimensions[0];
 
                     int add = currentRoute.dimensions[0] + currentRoute.dimensions[1];
 
+                    // If the combined size of both dimensions does not leave enough pieces for the jigsaw to be completed
                     if (currentRoute.remainingPieceIds.Count != (pieces.Count - add + 2))
                     {
                         // Sides combined do not leave enough pieces to complete the jigsaw in a perfect rectangle, discard the branch
@@ -118,6 +124,7 @@ public class RouteCreator
                 }
                 else
                 {
+                    // Set the third dimension, which should equal the first dimension
                     int currentSideLength = currentRoute.pieces.Count - currentRoute.dimensions[0] - currentRoute.dimensions[1];
                     currentRoute.dimensions[2] = currentSideLength + 2;
                 }
